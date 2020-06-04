@@ -10,8 +10,9 @@ class MyTestCase(unittest.TestCase):
         """
         below_num_list = [0, 1, 5, 10]
         for i in below_num_list:
-            result = get_multiples_sum(below_num=i)
-            self.assertEqual(0, result)
+            with self.subTest(below_num=i):
+                result = get_multiples_sum(below_num=i)
+                self.assertEqual(0, result)
 
     def test_get_multiples_sum_numbers_1(self):
         """
@@ -25,8 +26,9 @@ class MyTestCase(unittest.TestCase):
         ]
 
         for m in test_list:
-            result = get_multiples_sum(*m['numbers'], below_num=m['below_num'])
-            self.assertEqual(m['result'], result)
+            with self.subTest(**m):
+                result = get_multiples_sum(*m['numbers'], below_num=m['below_num'])
+                self.assertEqual(m['result'], result)
 
     def test_get_multiples_sum_numbers_2(self):
         """
@@ -41,7 +43,7 @@ class MyTestCase(unittest.TestCase):
         ]
 
         for m in test_list:
-            with self.subTest(numbers=m['numbers'], below_num=m['below_num']):
+            with self.subTest(**m):
                 result = get_multiples_sum(*m['numbers'], below_num=m['below_num'])
                 self.assertEqual(m['result'], result)
 
@@ -51,8 +53,9 @@ class MyTestCase(unittest.TestCase):
         """
         numbers_list = [[1], [1, 2], [1, 2, 3]]
         for numbers in numbers_list:
-            result = get_multiples_sum(*numbers, below_num=0)
-            self.assertEqual(0, result)
+            with self.subTest(numbers=numbers):
+                result = get_multiples_sum(*numbers, below_num=0)
+                self.assertEqual(0, result)
 
     def test_get_multiples_sum_below_num_1(self):
         """
@@ -60,8 +63,9 @@ class MyTestCase(unittest.TestCase):
         """
         numbers_list = [[1], [1, 2], [1, 2, 3]]
         for numbers in numbers_list:
-            result = get_multiples_sum(*numbers, below_num=0)
-            self.assertEqual(0, result)
+            with self.subTest(numbers=numbers):
+                result = get_multiples_sum(*numbers, below_num=0)
+                self.assertEqual(0, result)
 
 
 if __name__ == '__main__':
