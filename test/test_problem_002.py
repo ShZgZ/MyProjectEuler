@@ -1,53 +1,45 @@
-import unittest
+import pytest
 
 from src.problem_002 import get_even_fibonacci_sum
 
 
-class MyTestCase(unittest.TestCase):
-    def test_get_even_fibonacci_sum_n(self):
-        """
-        nの値
-        """
-        test_list = [
-            {'n': -3, 'expect': 0},
-            {'n': -1, 'expect': 0},
-            {'n': 0, 'expect': 0},
-            {'n': 1, 'expect': 0},
-            {'n': 3, 'expect': 2},
-        ]
-        for test in test_list:
-            with self.subTest(**test):
-                result = get_even_fibonacci_sum(n=test['n'])
-                self.assertEqual(test['expect'], result)
-
-    def test_get_even_fibonacci_sum_t_error(self):
-        """
-        エラーとなること
-        """
-        test_list = [
-            # どちらか負
-            {'t1': -1, 't2': -1, 'error_flg': True},
-            {'t1': -1, 't2': 0, 'error_flg': True},
-            {'t1': -1, 't2': 1, 'error_flg': True},
-            {'t1': -1, 't2': -1, 'error_flg': True},
-            {'t1': 0, 't2': -1, 'error_flg': True},
-            {'t1': 1, 't2': -1, 'error_flg': True},
-            # どちらも0
-            {'t1': 0, 't2': 0, 'error_flg': True},
-            # どちらか正
-            {'t1': 1, 't2': 0, 'expect': 10, 'error_flg': False},
-            {'t1': 0, 't2': 1, 'expect': 10, 'error_flg': False},
-            {'t1': 1, 't2': 1, 'expect': 10, 'error_flg': False},
-        ]
-        for test in test_list:
-            with self.subTest(**test):
-                if test['error_flg']:
-                    with self.assertRaises(Exception):
-                        get_even_fibonacci_sum(n=10, t1=test['t1'], t2=test['t2'])
-                else:
-                    result = get_even_fibonacci_sum(n=10, t1=test['t1'], t2=test['t2'])
-                    self.assertEqual(test['expect'], result)
+@pytest.mark.parametrize('number, expected', [
+    (-3, 0),
+    (-1, 0),
+    (0, 0),
+    (1, 0),
+    (3, 2),
+])
+def test_get_even_fibonacci_sum_n(number, expected):
+    """
+    nの値
+    """
+    result = get_even_fibonacci_sum(n=number)
+    assert expected == result
 
 
-if __name__ == '__main__':
-    unittest.main()
+@pytest.mark.parametrize('t1, t2, expected, error_flg', [
+    # どちらか負
+    (-1, -1, 0, True),
+    (-1, 0, 0, True),
+    (-1, 1, 0, True),
+    (-1, -1, 0, True),
+    (0, -1, 0, True),
+    (1, -1, 0, True),
+    # どちらも0
+    (0, 0, 0, True),
+    # どちらか正
+    (1, 0, 10, False),
+    (0, 1, 10, False),
+    (1, 1, 10, False),
+])
+def test_get_even_fibonacci_sum_t_error(t1, t2, expected, error_flg):
+    """
+    エラーとなること
+    """
+    if error_flg:
+        with pytest.raises(Exception):
+            get_even_fibonacci_sum(n=10, t1=t1, t2=t2)
+    else:
+        result = get_even_fibonacci_sum(n=10, t1=t1, t2=t2)
+        assert expected == result
