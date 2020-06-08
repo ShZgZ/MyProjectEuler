@@ -2,9 +2,9 @@
 ## プロジェクトオイラーの実装
 https://projecteuler.net/
 
-- 問題001: Multiples of 3 and 5
-- 問題002: Even Fibonacci numbers
-- 問題003: Largest prime factor
+- Complete 問題001: Multiples of 3 and 5
+- Complete 問題002: Even Fibonacci numbers
+- Complete 問題003: Largest prime factor
 - 問題004: Largest palindrome product
 - 問題005: Smallest multiple
 - 問題006: Sum square difference
